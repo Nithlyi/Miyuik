@@ -458,14 +458,14 @@ class Git(commands.Cog):
     @app_commands.command(name="github_push", description="Envia alterações para o GitHub")
     @app_commands.describe(
         repo="Nome do repositório",
-        branch="Nome da branch (padrão: main)",
+        branch="Nome da branch (opcional)",
         path="Caminho do diretório (opcional)"
     )
     async def github_push(
         self,
         interaction: discord.Interaction,
         repo: str,
-        branch: Optional[str] = "main",
+        branch: Optional[str] = None,
         path: Optional[str] = None
     ):
         """Envia alterações para o GitHub"""
@@ -475,43 +475,89 @@ class Git(commands.Cog):
             # Define o diretório de trabalho
             work_dir = path if path else os.getcwd()
             
-            # Obtém o token do GitHub
-            guild_id = str(interaction.guild.id)
-            if guild_id not in self.github_config or repo not in self.github_config[guild_id]:
-                await interaction.followup.send("❌ Repositório não configurado! Use /github_setup primeiro.")
-                return
-
-            token = self.github_config[guild_id][repo].get("token")
-            if not token:
-                await interaction.followup.send("❌ Token do GitHub não configurado! Use /github_token primeiro.")
-                return
-
-            # Configura o token no git
-            subprocess.run(
-                ["git", "config", "credential.helper", "store"],
-                cwd=work_dir,
-                capture_output=True
-            )
-
-            # Executa git push com o token
+            # Verifica se o repositório está configurado
             result = subprocess.run(
-                ["git", "push", "origin", branch],
+                ["git", "remote", "-v"],
                 cwd=work_dir,
-                env={"GIT_ASKPASS": "echo", "GIT_USERNAME": self.github_config[guild_id][repo]["username"], "GIT_PASSWORD": token},
                 capture_output=True,
                 text=True
             )
-
-            if result.returncode == 0:
+            
+            if "github.com" not in result.stdout:
                 await interaction.followup.send(
-                    f"✅ Alterações enviadas com sucesso para o GitHub!\n"
-                    f"• Repositório: `{repo}`\n"
-                    f"• Branch: `{branch}`"
+                    "❌ Repositório não configurado! Use /github_setup primeiro."
+                )
+                return
+
+            # Define a branch
+            branch_name = branch if branch else "main"
+            
+            # Tenta fazer o push com diferentes estratégias
+            push_commands = [
+                ["git", "push", "-u", "origin", branch_name],
+                ["git", "push", "origin", branch_name, "--force"],
+                ["git", "push", "origin", branch_name, "--verbose"]
+            ]
+            
+            success = False
+            error_message = ""
+            
+            for cmd in push_commands:
+                result = subprocess.run(
+                    cmd,
+                    cwd=work_dir,
+                    capture_output=True,
+                    text=True
+                )
+                
+                if result.returncode == 0:
+                    success = True
+                    break
+                else:
+                    error_message = result.stderr
+
+            if success:
+                await interaction.followup.send(
+                    f"✅ Alterações enviadas com sucesso para o repositório `{repo}`!"
                 )
             else:
+                # Tenta uma última vez com credenciais explícitas
                 await interaction.followup.send(
-                    f"❌ Erro ao enviar alterações: {result.stderr}"
+                    "⚠️ Tentando método alternativo de push..."
                 )
+                
+                # Obtém o token do arquivo de configuração
+                config_path = os.path.join(work_dir, ".git", "config")
+                token = None
+                
+                if os.path.exists(config_path):
+                    with open(config_path, "r") as f:
+                        content = f.read()
+                        if "token=" in content:
+                            token = content.split("token=")[1].split("\n")[0].strip()
+                
+                if token:
+                    # Tenta push com token explícito
+                    repo_url = f"https://{token}@github.com/Nithlyi/{repo}.git"
+                    result = subprocess.run(
+                        ["git", "push", repo_url, branch_name],
+                        cwd=work_dir,
+                        capture_output=True,
+                        text=True
+                    )
+                    
+                    if result.returncode == 0:
+                        await interaction.followup.send(
+                            f"✅ Alterações enviadas com sucesso para o repositório `{repo}`!"
+                        )
+                    else:
+                        await interaction.followup.send(
+                            f"❌ Erro ao enviar alterações: {result.stderr}"
+                        )
+                else:
+                    await interaction.followup.send(
+                        f"❌ Erro ao enviar alterações: {error_message}"
+                    )
 
         except Exception as e:
             await interaction.followup.send(f"❌ Erro: {str(e)}")
