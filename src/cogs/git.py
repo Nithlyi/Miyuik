@@ -516,6 +516,44 @@ class Git(commands.Cog):
         except Exception as e:
             await interaction.followup.send(f"❌ Erro: {str(e)}")
 
+    @app_commands.command(name="git_remote_remove", description="Remove um remote do Git")
+    @app_commands.describe(
+        remote="Nome do remote (padrão: origin)",
+        path="Caminho do diretório (opcional)"
+    )
+    async def git_remote_remove(
+        self,
+        interaction: discord.Interaction,
+        remote: Optional[str] = "origin",
+        path: Optional[str] = None
+    ):
+        """Remove um remote do Git"""
+        await interaction.response.defer()
+
+        try:
+            # Define o diretório de trabalho
+            work_dir = path if path else os.getcwd()
+            
+            # Remove o remote
+            result = subprocess.run(
+                ["git", "remote", "remove", remote],
+                cwd=work_dir,
+                capture_output=True,
+                text=True
+            )
+
+            if result.returncode == 0:
+                await interaction.followup.send(
+                    f"✅ Remote `{remote}` removido com sucesso!"
+                )
+            else:
+                await interaction.followup.send(
+                    f"❌ Erro ao remover remote: {result.stderr}"
+                )
+
+        except Exception as e:
+            await interaction.followup.send(f"❌ Erro: {str(e)}")
+
     @git_init.error
     @git_status.error
     @git_add.error
