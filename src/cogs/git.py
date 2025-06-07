@@ -554,6 +554,59 @@ class Git(commands.Cog):
         except Exception as e:
             await interaction.followup.send(f"❌ Erro: {str(e)}")
 
+    @app_commands.command(name="git_branch", description="Verifica ou configura a branch atual")
+    @app_commands.describe(
+        branch="Nome da branch para configurar (opcional)",
+        path="Caminho do diretório (opcional)"
+    )
+    async def git_branch(
+        self,
+        interaction: discord.Interaction,
+        branch: Optional[str] = None,
+        path: Optional[str] = None
+    ):
+        """Verifica ou configura a branch atual"""
+        await interaction.response.defer()
+
+        try:
+            # Define o diretório de trabalho
+            work_dir = path if path else os.getcwd()
+            
+            if branch:
+                # Cria e muda para a nova branch
+                result = subprocess.run(
+                    ["git", "checkout", "-b", branch],
+                    cwd=work_dir,
+                    capture_output=True,
+                    text=True
+                )
+            else:
+                # Apenas verifica a branch atual
+                result = subprocess.run(
+                    ["git", "branch", "--show-current"],
+                    cwd=work_dir,
+                    capture_output=True,
+                    text=True
+                )
+
+            if result.returncode == 0:
+                if branch:
+                    await interaction.followup.send(
+                        f"✅ Branch `{branch}` criada e selecionada com sucesso!"
+                    )
+                else:
+                    current_branch = result.stdout.strip()
+                    await interaction.followup.send(
+                        f"📌 Branch atual: `{current_branch}`"
+                    )
+            else:
+                await interaction.followup.send(
+                    f"❌ Erro ao gerenciar branch: {result.stderr}"
+                )
+
+        except Exception as e:
+            await interaction.followup.send(f"❌ Erro: {str(e)}")
+
     @git_init.error
     @git_status.error
     @git_add.error
