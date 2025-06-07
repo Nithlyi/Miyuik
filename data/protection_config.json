@@ -1,0 +1,20 @@
+{
+    "anti_spam": {
+        "enabled": true,
+        "max_messages": 5,
+        "time_window": 5,
+        "punishment": "mute",
+        "punishment_duration": 300
+    },
+    "anti_raid": {
+        "enabled": true,
+        "max_joins": 5,
+        "time_window": 10,
+        "punishment": "ban"
+    },
+    "anti_invite": {
+        "enabled": true,
+        "punishment": "delete",
+        "whitelist": []
+    }
+}
