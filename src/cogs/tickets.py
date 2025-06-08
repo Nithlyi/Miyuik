@@ -224,8 +224,16 @@ class Tickets(commands.Cog):
 
     async def confirm_close_ticket(self, interaction: discord.Interaction):
         """Confirma o fechamento do ticket"""
-        # Obtém o ID do usuário do ticket
-        user_id = int(interaction.channel.name.split("-")[1])
+        # Obtém o ID do usuário do ticket do nome do canal (formato ticket-tipo-user_id)
+        user_id = None
+        try:
+            parts = interaction.channel.name.split("-")
+            # Verifica se o nome do canal tem o formato esperado e tenta obter o ID do usuário
+            if len(parts) > 2 and parts[-1].isdigit():
+                 user_id = int(parts[-1]) # O ID do usuário é a última parte
+        except (ValueError, IndexError):
+             # Ignora se o nome do canal não estiver no formato esperado ou a conversão falhar
+             pass
 
         # Cria o embed de fechamento
         close_embed = discord.Embed(
@@ -233,6 +241,9 @@ class Tickets(commands.Cog):
             description=f"Este ticket foi fechado por {interaction.user.mention}",
             color=discord.Color.red()
         )
+        # Adiciona o campo de usuário do ticket ao embed se o ID foi obtido com sucesso
+        if user_id:
+             close_embed.add_field(name="Usuário do Ticket", value=f"<@{user_id}>", inline=True)
 
         # Envia a mensagem de fechamento
         await interaction.channel.send(embed=close_embed)

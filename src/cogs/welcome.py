@@ -8,61 +8,58 @@ from datetime import datetime
 class Welcome(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.config_file = "data/welcome_config.json"
+        self.welcome_config = {}
         self.load_config()
 
     def load_config(self):
-        if not os.path.exists("data"):
-            os.makedirs("data")
-        if os.path.exists(self.config_file):
-            with open(self.config_file, "r") as f:
-                self.config = json.load(f)
-        else:
-            self.config = {}
-            self.save_config()
+        """Carrega a configuração de boas-vindas"""
+        if os.path.exists("welcome_config.json"):
+            with open("welcome_config.json", "r") as f:
+                self.welcome_config = json.load(f)
 
     def save_config(self):
-        with open(self.config_file, "w") as f:
-            json.dump(self.config, f, indent=4)
+        """Salva a configuração de boas-vindas"""
+        with open("welcome_config.json", "w") as f:
+            json.dump(self.welcome_config, f, indent=4)
 
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
         """Evento quando um membro entra no servidor"""
         guild_id = str(member.guild.id)
-        if guild_id in self.config and "welcome" in self.config[guild_id]:
-            welcome_config = self.config[guild_id]["welcome"]
+        if guild_id in self.welcome_config:
+            config = self.welcome_config[guild_id]
             
-            if not welcome_config["enabled"]:
+            if not config["enabled"]:
                 return
 
-            channel = member.guild.get_channel(welcome_config["channel_id"])
+            channel = member.guild.get_channel(config["channel_id"])
             if not channel:
                 return
 
             # Substituir variáveis na mensagem
-            message = welcome_config["message"]
+            message = config["message"]
             message = message.replace("{user}", member.mention)
             message = message.replace("{server}", member.guild.name)
             message = message.replace("{count}", str(member.guild.member_count))
             message = message.replace("{username}", str(member))
             message = message.replace("{mention}", member.mention)
 
-            if welcome_config["use_embed"]:
+            if config["use_embed"]:
                 embed = discord.Embed(
-                    title=welcome_config["embed_title"],
+                    title=config["embed_title"],
                     description=message,
-                    color=discord.Color.green(),
+                    color=discord.Color(config["embed_color"]),
                     timestamp=datetime.utcnow()
                 )
                 
-                if welcome_config["embed_thumbnail"]:
+                if config["embed_thumbnail"]:
                     embed.set_thumbnail(url=member.display_avatar.url)
                 
-                if welcome_config["embed_image"]:
-                    embed.set_image(url=welcome_config["embed_image"])
+                if config["embed_image"]:
+                    embed.set_image(url=config["embed_image"])
                 
-                if welcome_config["embed_footer"]:
-                    embed.set_footer(text=welcome_config["embed_footer"])
+                if config["embed_footer"]:
+                    embed.set_footer(text=config["embed_footer"])
                 
                 await channel.send(embed=embed)
             else:
@@ -72,8 +69,8 @@ class Welcome(commands.Cog):
     async def on_member_remove(self, member: discord.Member):
         """Evento quando um membro sai do servidor"""
         guild_id = str(member.guild.id)
-        if guild_id in self.config and "leave" in self.config[guild_id]:
-            leave_config = self.config[guild_id]["leave"]
+        if guild_id in self.welcome_config and "leave" in self.welcome_config[guild_id]:
+            leave_config = self.welcome_config[guild_id]["leave"]
             
             if not leave_config["enabled"]:
                 return
@@ -114,10 +111,27 @@ class Welcome(commands.Cog):
     @app_commands.command(name="setwelcome", description="Configura a mensagem de boas-vindas")
     @app_commands.checks.has_permissions(administrator=True)
     async def setwelcome(self, interaction: discord.Interaction):
-        """Comando para configurar mensagem de boas-vindas"""
+        """Configura a mensagem de boas-vindas"""
+        # Inicializa a configuração do servidor se não existir
+        guild_id = str(interaction.guild.id)
+        if guild_id not in self.welcome_config:
+            self.welcome_config[guild_id] = {
+                "enabled": True,
+                "channel_id": None,
+                "message": "Bem-vindo {user} ao {server}!",
+                "use_embed": True,
+                "embed_title": "👋 Boas-vindas!",
+                "embed_thumbnail": True,
+                "embed_image": None,
+                "embed_footer": None,
+                "embed_color": discord.Color.blue()
+            }
+
+        # Cria a view de configuração
         view = WelcomeSetupView(self)
         await interaction.response.send_message(
-            "Configure a mensagem de boas-vindas:",
+            "**Configuração de Boas-vindas**\n"
+            "Use os botões abaixo para configurar a mensagem de boas-vindas:",
             view=view,
             ephemeral=True
         )
@@ -125,25 +139,42 @@ class Welcome(commands.Cog):
     @app_commands.command(name="setleave", description="Configura a mensagem de despedida")
     @app_commands.checks.has_permissions(administrator=True)
     async def setleave(self, interaction: discord.Interaction):
-        """Comando para configurar mensagem de despedida"""
+        """Configura a mensagem de despedida"""
+        # Inicializa a configuração do servidor se não existir
+        guild_id = str(interaction.guild.id)
+        if guild_id not in self.welcome_config:
+            self.welcome_config[guild_id] = {}
+        
+        if "leave" not in self.welcome_config[guild_id]:
+            self.welcome_config[guild_id]["leave"] = {
+                "enabled": True,
+                "channel_id": None,
+                "message": "{user} saiu do servidor {server}!",
+                "use_embed": True,
+                "embed_title": "👋 Até logo!",
+                "embed_thumbnail": True,
+                "embed_image": None,
+                "embed_footer": None
+            }
+
+        # Cria o modal de configuração
         modal = LeaveModal(self)
         await interaction.response.send_modal(modal)
 
     @app_commands.command(name="welcomeconfig", description="Mostra a configuração atual de boas-vindas")
     @app_commands.checks.has_permissions(administrator=True)
     async def welcomeconfig(self, interaction: discord.Interaction):
-        """Comando para ver configuração de boas-vindas"""
+        """Mostra a configuração atual de boas-vindas"""
         guild_id = str(interaction.guild.id)
-        
-        if guild_id not in self.config or "welcome" not in self.config[guild_id]:
+        if guild_id not in self.welcome_config:
             await interaction.response.send_message(
-                "Nenhuma configuração de boas-vindas encontrada! Use `/setwelcome` para configurar.",
+                "❌ Nenhuma configuração de boas-vindas encontrada! Use /setwelcome para configurar.",
                 ephemeral=True
             )
             return
 
-        welcome_config = self.config[guild_id]["welcome"]
-        channel = interaction.guild.get_channel(welcome_config["channel_id"])
+        config = self.welcome_config[guild_id]
+        channel = interaction.guild.get_channel(config["channel_id"]) if config["channel_id"] else None
 
         embed = discord.Embed(
             title="⚙️ Configuração de Boas-vindas",
@@ -152,29 +183,30 @@ class Welcome(commands.Cog):
 
         embed.add_field(
             name="Status",
-            value="✅ Ativado" if welcome_config["enabled"] else "❌ Desativado",
-            inline=False
+            value="✅ Ativado" if config["enabled"] else "❌ Desativado",
+            inline=True
         )
 
         embed.add_field(
             name="Canal",
-            value=channel.mention if channel else "Canal não encontrado",
-            inline=False
+            value=channel.mention if channel else "❌ Não configurado",
+            inline=True
         )
 
         embed.add_field(
             name="Mensagem",
-            value=welcome_config["message"],
+            value=config["message"],
             inline=False
         )
 
-        if welcome_config["use_embed"]:
+        if config["use_embed"]:
             embed.add_field(
                 name="Configuração do Embed",
-                value=f"**Título:** {welcome_config['embed_title']}\n"
-                      f"**Thumbnail:** {'Sim' if welcome_config['embed_thumbnail'] else 'Não'}\n"
-                      f"**Imagem:** {'Sim' if welcome_config['embed_image'] else 'Não'}\n"
-                      f"**Rodapé:** {welcome_config['embed_footer']}",
+                value=f"**Título:** {config['embed_title']}\n"
+                      f"**Cor:** {config['embed_color']}\n"
+                      f"**Thumbnail:** {'✅' if config['embed_thumbnail'] else '❌'}\n"
+                      f"**Imagem:** {config['embed_image'] or '❌'}\n"
+                      f"**Rodapé:** {config['embed_footer'] or '❌'}",
                 inline=False
             )
 
@@ -183,49 +215,48 @@ class Welcome(commands.Cog):
     @app_commands.command(name="leaveconfig", description="Mostra a configuração atual de despedidas")
     @app_commands.checks.has_permissions(administrator=True)
     async def leaveconfig(self, interaction: discord.Interaction):
-        """Comando para ver configuração de despedidas"""
+        """Mostra a configuração atual de despedidas"""
         guild_id = str(interaction.guild.id)
-        
-        if guild_id not in self.config or "leave" not in self.config[guild_id]:
+        if guild_id not in self.welcome_config or "leave" not in self.welcome_config[guild_id]:
             await interaction.response.send_message(
-                "Nenhuma configuração de despedida encontrada! Use `/setleave` para configurar.",
+                "❌ Nenhuma configuração de despedida encontrada! Use /setleave para configurar.",
                 ephemeral=True
             )
             return
 
-        leave_config = self.config[guild_id]["leave"]
-        channel = interaction.guild.get_channel(leave_config["channel_id"])
+        config = self.welcome_config[guild_id]["leave"]
+        channel = interaction.guild.get_channel(config["channel_id"]) if config["channel_id"] else None
 
         embed = discord.Embed(
             title="⚙️ Configuração de Despedidas",
-            color=discord.Color.blue()
+            color=discord.Color.red()
         )
 
         embed.add_field(
             name="Status",
-            value="✅ Ativado" if leave_config["enabled"] else "❌ Desativado",
-            inline=False
+            value="✅ Ativado" if config["enabled"] else "❌ Desativado",
+            inline=True
         )
 
         embed.add_field(
             name="Canal",
-            value=channel.mention if channel else "Canal não encontrado",
-            inline=False
+            value=channel.mention if channel else "❌ Não configurado",
+            inline=True
         )
 
         embed.add_field(
             name="Mensagem",
-            value=leave_config["message"],
+            value=config["message"],
             inline=False
         )
 
-        if leave_config["use_embed"]:
+        if config["use_embed"]:
             embed.add_field(
                 name="Configuração do Embed",
-                value=f"**Título:** {leave_config['embed_title']}\n"
-                      f"**Thumbnail:** {'Sim' if leave_config['embed_thumbnail'] else 'Não'}\n"
-                      f"**Imagem:** {'Sim' if leave_config['embed_image'] else 'Não'}\n"
-                      f"**Rodapé:** {leave_config['embed_footer']}",
+                value=f"**Título:** {config['embed_title']}\n"
+                      f"**Thumbnail:** {'✅' if config['embed_thumbnail'] else '❌'}\n"
+                      f"**Imagem:** {config['embed_image'] or '❌'}\n"
+                      f"**Rodapé:** {config['embed_footer'] or '❌'}",
                 inline=False
             )
 
@@ -233,136 +264,201 @@ class Welcome(commands.Cog):
 
 class WelcomeSetupView(discord.ui.View):
     def __init__(self, cog):
-        super().__init__(timeout=None)
+        super().__init__(timeout=300)
         self.cog = cog
-        self.channel_id = None
-        self.message = None
-        self.use_embed = False
-        self.embed_title = None
-        self.embed_image = None
-        self.embed_footer = None
+        self.config = {
+            "channel_id": None,
+            "message": None,
+            "use_embed": True,
+            "embed_title": None,
+            "embed_thumbnail": True,
+            "embed_image": None,
+            "embed_footer": None,
+            "embed_color": discord.Color.blue()
+        }
 
     @discord.ui.button(label="1. Configurar Canal", style=discord.ButtonStyle.primary, row=0)
     async def set_channel(self, interaction: discord.Interaction, button: discord.ui.Button):
+        """Configura o canal de boas-vindas"""
         modal = ChannelModal(self)
         await interaction.response.send_modal(modal)
 
     @discord.ui.button(label="2. Configurar Mensagem", style=discord.ButtonStyle.primary, row=0)
     async def set_message(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if not self.channel_id:
-            await interaction.response.send_message(
-                "Configure o canal primeiro!",
-                ephemeral=True
-            )
-            return
-        
+        """Configura a mensagem de boas-vindas"""
         modal = MessageModal(self)
         await interaction.response.send_modal(modal)
 
     @discord.ui.button(label="3. Configurar Embed", style=discord.ButtonStyle.primary, row=0)
     async def set_embed(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if not self.message:
-            await interaction.response.send_message(
-                "Configure a mensagem primeiro!",
-                ephemeral=True
-            )
-            return
-        
+        """Configura as opções do embed"""
         modal = EmbedModal(self)
         await interaction.response.send_modal(modal)
 
-    @discord.ui.button(label="4. Salvar Configuração", style=discord.ButtonStyle.success, row=1)
-    async def save_config(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if not self.channel_id or not self.message:
+    @discord.ui.button(label="4. Escolher Cor", style=discord.ButtonStyle.primary, row=1)
+    async def set_color(self, interaction: discord.Interaction, button: discord.ui.Button):
+        """Abre o menu de seleção de cor"""
+        view = ColorSelectView(self)
+        await interaction.response.send_message(
+            "Escolha uma cor para o embed:",
+            view=view,
+            ephemeral=True
+        )
+
+    @discord.ui.button(label="5. Preview", style=discord.ButtonStyle.secondary, row=1)
+    async def preview(self, interaction: discord.Interaction, button: discord.ui.Button):
+        """Mostra uma prévia do embed"""
+        if not self.config["message"]:
             await interaction.response.send_message(
-                "Configure o canal e a mensagem primeiro!",
+                "❌ Você precisa configurar a mensagem primeiro!",
                 ephemeral=True
             )
             return
 
-        try:
-            # Salvar configuração
-            guild_id = str(interaction.guild.id)
-            if guild_id not in self.cog.config:
-                self.cog.config[guild_id] = {}
-
-            self.cog.config[guild_id]["welcome"] = {
-                "enabled": True,
-                "channel_id": self.channel_id,
-                "message": self.message,
-                "use_embed": self.use_embed,
-                "embed_title": self.embed_title if self.use_embed else "",
-                "embed_thumbnail": True if self.use_embed else False,
-                "embed_image": self.embed_image if self.use_embed and self.embed_image else "",
-                "embed_footer": self.embed_footer if self.use_embed and self.embed_footer else ""
-            }
-
-            self.cog.save_config()
-
-            embed = discord.Embed(
-                title="✅ Configuração Salva",
-                description="Configuração de boas-vindas atualizada com sucesso!",
-                color=discord.Color.green()
-            )
-            embed.add_field(
-                name="Canal",
-                value=f"<#{self.channel_id}>",
-                inline=False
-            )
-            embed.add_field(
-                name="Mensagem",
-                value=self.message,
-                inline=False
-            )
-            if self.use_embed:
-                embed.add_field(
-                    name="Configuração do Embed",
-                    value=f"**Título:** {self.embed_title}\n"
-                          f"**Imagem:** {'Sim' if self.embed_image else 'Não'}\n"
-                          f"**Rodapé:** {self.embed_footer or 'Não'}",
-                    inline=False
-                )
-
-            await interaction.response.send_message(embed=embed, ephemeral=True)
-
-        except Exception as e:
+        if self.config["use_embed"] and not self.config["embed_title"]:
             await interaction.response.send_message(
-                f"Erro ao salvar configuração: {str(e)}",
+                "❌ Você precisa configurar o título do embed primeiro!",
                 ephemeral=True
             )
+            return
+
+        # Cria o embed de preview
+        embed = discord.Embed(
+            title=self.config["embed_title"],
+            description=self.config["message"].replace("{user}", interaction.user.mention)
+                                             .replace("{server}", interaction.guild.name)
+                                             .replace("{count}", str(interaction.guild.member_count))
+                                             .replace("{username}", str(interaction.user))
+                                             .replace("{mention}", interaction.user.mention),
+            color=self.config["embed_color"],
+            timestamp=datetime.utcnow()
+        )
+
+        if self.config["embed_thumbnail"]:
+            embed.set_thumbnail(url=interaction.user.display_avatar.url)
+
+        if self.config["embed_image"]:
+            embed.set_image(url=self.config["embed_image"])
+
+        if self.config["embed_footer"]:
+            embed.set_footer(text=self.config["embed_footer"])
+
+        # Cria uma view com botões para atualizar o preview
+        view = PreviewView(self, embed)
+        await interaction.response.send_message(
+            "**Preview do Embed de Boas-vindas**",
+            embed=embed,
+            view=view,
+            ephemeral=True
+        )
+
+    @discord.ui.button(label="6. Salvar Configuração", style=discord.ButtonStyle.success, row=2)
+    async def save_config(self, interaction: discord.Interaction, button: discord.ui.Button):
+        """Salva a configuração de boas-vindas"""
+        if not self.config["channel_id"]:
+            await interaction.response.send_message(
+                "❌ Você precisa configurar o canal primeiro!",
+                ephemeral=True
+            )
+            return
+
+        if not self.config["message"]:
+            await interaction.response.send_message(
+                "❌ Você precisa configurar a mensagem primeiro!",
+                ephemeral=True
+            )
+            return
+
+        if self.config["use_embed"] and not self.config["embed_title"]:
+            await interaction.response.send_message(
+                "❌ Você precisa configurar o título do embed primeiro!",
+                ephemeral=True
+            )
+            return
+
+        # Salva a configuração
+        guild_id = str(interaction.guild.id)
+        if guild_id not in self.cog.welcome_config:
+            self.cog.welcome_config[guild_id] = {}
+        
+        self.cog.welcome_config[guild_id]["welcome"] = {
+            "enabled": True,
+            "channel_id": self.config["channel_id"],
+            "message": self.config["message"],
+            "use_embed": self.config["use_embed"],
+            "embed_title": self.config["embed_title"],
+            "embed_thumbnail": self.config["embed_thumbnail"],
+            "embed_image": self.config["embed_image"],
+            "embed_footer": self.config["embed_footer"],
+            "embed_color": self.config["embed_color"].value
+        }
+
+        self.cog.save_config()
+
+        embed = discord.Embed(
+            title="✅ Configuração Salva",
+            description="A configuração de boas-vindas foi salva com sucesso!",
+            color=discord.Color.green()
+        )
+
+        channel = interaction.guild.get_channel(self.config["channel_id"])
+        embed.add_field(
+            name="Canal",
+            value=channel.mention if channel else "❌ Canal não encontrado",
+            inline=True
+        )
+
+        embed.add_field(
+            name="Mensagem",
+            value=self.config["message"],
+            inline=False
+        )
+
+        if self.config["use_embed"]:
+            embed.add_field(
+                name="Configuração do Embed",
+                value=f"**Título:** {self.config['embed_title']}\n"
+                      f"**Cor:** {self.config['embed_color']}\n"
+                      f"**Thumbnail:** {'✅' if self.config['embed_thumbnail'] else '❌'}\n"
+                      f"**Imagem:** {self.config['embed_image'] or '❌'}\n"
+                      f"**Rodapé:** {self.config['embed_footer'] or '❌'}",
+                inline=False
+            )
+
+        await interaction.response.send_message(embed=embed, ephemeral=True)
 
 class ChannelModal(discord.ui.Modal, title="Configurar Canal"):
     def __init__(self, view):
         super().__init__()
         self.view = view
-
-        self.channel = discord.ui.TextInput(
+        self.channel_input = discord.ui.TextInput(
             label="ID do Canal",
-            placeholder="Digite o ID do canal",
+            placeholder="Digite o ID do canal de boas-vindas",
             required=True
         )
-        self.add_item(self.channel)
+        self.add_item(self.channel_input)
 
     async def on_submit(self, interaction: discord.Interaction):
         try:
-            channel_id = int(self.channel.value)
+            channel_id = int(self.channel_input.value)
             channel = interaction.guild.get_channel(channel_id)
+            
             if not channel:
                 await interaction.response.send_message(
-                    "Canal não encontrado! Verifique o ID.",
+                    "❌ Canal não encontrado! Verifique o ID e tente novamente.",
                     ephemeral=True
                 )
                 return
 
-            self.view.channel_id = channel_id
+            self.view.config["channel_id"] = channel_id
             await interaction.response.send_message(
-                f"Canal configurado: {channel.mention}",
+                f"✅ Canal configurado: {channel.mention}",
                 ephemeral=True
             )
 
         except ValueError:
             await interaction.response.send_message(
-                "ID de canal inválido!",
+                "❌ ID do canal inválido! Digite apenas números.",
                 ephemeral=True
             )
 
@@ -370,19 +466,18 @@ class MessageModal(discord.ui.Modal, title="Configurar Mensagem"):
     def __init__(self, view):
         super().__init__()
         self.view = view
-
-        self.message = discord.ui.TextInput(
+        self.message_input = discord.ui.TextInput(
             label="Mensagem",
-            placeholder="Digite a mensagem de boas-vindas\nVariáveis: {user}, {server}, {count}, {username}, {mention}",
+            placeholder="Digite a mensagem de boas-vindas (use {user} para mencionar o usuário)",
             required=True,
             style=discord.TextStyle.paragraph
         )
-        self.add_item(self.message)
+        self.add_item(self.message_input)
 
     async def on_submit(self, interaction: discord.Interaction):
-        self.view.message = self.message.value
+        self.view.config["message"] = self.message_input.value
         await interaction.response.send_message(
-            "Mensagem configurada com sucesso!",
+            "✅ Mensagem configurada com sucesso!",
             ephemeral=True
         )
 
@@ -390,162 +485,251 @@ class EmbedModal(discord.ui.Modal, title="Configurar Embed"):
     def __init__(self, view):
         super().__init__()
         self.view = view
-
-        self.use_embed = discord.ui.TextInput(
-            label="Usar Embed (true/false)",
-            placeholder="true ou false",
-            required=True
-        )
-        self.add_item(self.use_embed)
-
-        self.embed_title = discord.ui.TextInput(
+        
+        self.title_input = discord.ui.TextInput(
             label="Título do Embed",
             placeholder="Digite o título do embed",
-            required=False
+            required=True
         )
-        self.add_item(self.embed_title)
-
-        self.embed_image = discord.ui.TextInput(
-            label="URL da Imagem do Embed",
+        
+        self.thumbnail_input = discord.ui.TextInput(
+            label="Usar Thumbnail",
+            placeholder="Digite 'sim' ou 'não'",
+            required=True
+        )
+        
+        self.image_input = discord.ui.TextInput(
+            label="URL da Imagem",
             placeholder="Digite a URL da imagem (opcional)",
             required=False
         )
-        self.add_item(self.embed_image)
-
-        self.embed_footer = discord.ui.TextInput(
-            label="Rodapé do Embed",
+        
+        self.footer_input = discord.ui.TextInput(
+            label="Texto do Rodapé",
             placeholder="Digite o texto do rodapé (opcional)",
             required=False
         )
-        self.add_item(self.embed_footer)
+        
+        self.add_item(self.title_input)
+        self.add_item(self.thumbnail_input)
+        self.add_item(self.image_input)
+        self.add_item(self.footer_input)
 
     async def on_submit(self, interaction: discord.Interaction):
-        try:
-            self.view.use_embed = self.use_embed.value.lower() == "true"
-            
-            if self.view.use_embed:
-                if not self.embed_title.value:
-                    await interaction.response.send_message(
-                        "O título do embed é obrigatório quando usar embed!",
-                        ephemeral=True
-                    )
-                    return
-                
-                self.view.embed_title = self.embed_title.value
-                self.view.embed_image = self.embed_image.value
-                self.view.embed_footer = self.embed_footer.value
+        self.view.config["embed_title"] = self.title_input.value
+        self.view.config["embed_thumbnail"] = self.thumbnail_input.value.lower() == "sim"
+        self.view.config["embed_image"] = self.image_input.value or None
+        self.view.config["embed_footer"] = self.footer_input.value or None
 
-            await interaction.response.send_message(
-                "Configuração do embed atualizada com sucesso!",
-                ephemeral=True
-            )
-
-        except Exception as e:
-            await interaction.response.send_message(
-                f"Erro ao configurar embed: {str(e)}",
-                ephemeral=True
-            )
+        await interaction.response.send_message(
+            "✅ Configuração do embed salva com sucesso!",
+            ephemeral=True
+        )
 
 class LeaveModal(discord.ui.Modal, title="Configurar Despedida"):
     def __init__(self, cog):
         super().__init__()
         self.cog = cog
-
-        self.channel = discord.ui.TextInput(
+        
+        self.channel_input = discord.ui.TextInput(
             label="ID do Canal",
-            placeholder="Digite o ID do canal",
+            placeholder="Digite o ID do canal de despedidas",
             required=True
         )
-        self.add_item(self.channel)
-
-        self.message = discord.ui.TextInput(
+        
+        self.message_input = discord.ui.TextInput(
             label="Mensagem",
-            placeholder="Digite a mensagem de despedida\nVariáveis: {user}, {server}, {count}, {username}, {mention}",
+            placeholder="Digite a mensagem de despedida (use {user} para mencionar o usuário)",
             required=True,
             style=discord.TextStyle.paragraph
         )
-        self.add_item(self.message)
-
-        self.use_embed = discord.ui.TextInput(
-            label="Usar Embed (true/false)",
-            placeholder="true ou false",
-            required=True
-        )
-        self.add_item(self.use_embed)
-
-        self.embed_title = discord.ui.TextInput(
+        
+        self.title_input = discord.ui.TextInput(
             label="Título do Embed",
             placeholder="Digite o título do embed",
-            required=False
+            required=True
         )
-        self.add_item(self.embed_title)
-
-        self.embed_image = discord.ui.TextInput(
-            label="URL da Imagem do Embed",
+        
+        self.thumbnail_input = discord.ui.TextInput(
+            label="Usar Thumbnail",
+            placeholder="Digite 'sim' ou 'não'",
+            required=True
+        )
+        
+        self.image_input = discord.ui.TextInput(
+            label="URL da Imagem",
             placeholder="Digite a URL da imagem (opcional)",
             required=False
         )
-        self.add_item(self.embed_image)
-
-        self.embed_footer = discord.ui.TextInput(
-            label="Rodapé do Embed",
+        
+        self.footer_input = discord.ui.TextInput(
+            label="Texto do Rodapé",
             placeholder="Digite o texto do rodapé (opcional)",
             required=False
         )
-        self.add_item(self.embed_footer)
+        
+        self.add_item(self.channel_input)
+        self.add_item(self.message_input)
+        self.add_item(self.title_input)
+        self.add_item(self.thumbnail_input)
+        self.add_item(self.image_input)
+        self.add_item(self.footer_input)
 
     async def on_submit(self, interaction: discord.Interaction):
         try:
-            # Validar canal
-            channel_id = int(self.channel.value)
+            channel_id = int(self.channel_input.value)
             channel = interaction.guild.get_channel(channel_id)
+            
             if not channel:
                 await interaction.response.send_message(
-                    "Canal não encontrado! Verifique o ID.",
+                    "❌ Canal não encontrado! Verifique o ID e tente novamente.",
                     ephemeral=True
                 )
                 return
 
-            # Validar uso de embed
-            use_embed = self.use_embed.value.lower() == "true"
-            if use_embed and not self.embed_title.value:
-                await interaction.response.send_message(
-                    "O título do embed é obrigatório quando usar embed!",
-                    ephemeral=True
-                )
-                return
-
-            # Salvar configuração
+            # Salva a configuração
             guild_id = str(interaction.guild.id)
-            if guild_id not in self.cog.config:
-                self.cog.config[guild_id] = {}
-
-            self.cog.config[guild_id]["leave"] = {
+            self.cog.welcome_config[guild_id]["leave"] = {
                 "enabled": True,
                 "channel_id": channel_id,
-                "message": self.message.value,
-                "use_embed": use_embed,
-                "embed_title": self.embed_title.value if use_embed else "",
-                "embed_thumbnail": True if use_embed else False,
-                "embed_image": self.embed_image.value if use_embed and self.embed_image.value else "",
-                "embed_footer": self.embed_footer.value if use_embed and self.embed_footer.value else ""
+                "message": self.message_input.value,
+                "use_embed": True,
+                "embed_title": self.title_input.value,
+                "embed_thumbnail": self.thumbnail_input.value.lower() == "sim",
+                "embed_image": self.image_input.value or None,
+                "embed_footer": self.footer_input.value or None
             }
-
             self.cog.save_config()
 
-            await interaction.response.send_message(
-                "Configuração de despedida atualizada com sucesso!",
-                ephemeral=True
+            # Mostra a configuração salva
+            embed = discord.Embed(
+                title="✅ Configuração Salva!",
+                description="Sua mensagem de despedida foi configurada com sucesso!",
+                color=discord.Color.green()
             )
+
+            embed.add_field(
+                name="Canal",
+                value=channel.mention,
+                inline=True
+            )
+
+            embed.add_field(
+                name="Mensagem",
+                value=self.message_input.value,
+                inline=False
+            )
+
+            embed.add_field(
+                name="Configuração do Embed",
+                value=f"**Título:** {self.title_input.value}\n"
+                      f"**Thumbnail:** {'✅' if self.thumbnail_input.value.lower() == 'sim' else '❌'}\n"
+                      f"**Imagem:** {self.image_input.value or '❌'}\n"
+                      f"**Rodapé:** {self.footer_input.value or '❌'}",
+                inline=False
+            )
+
+            await interaction.response.send_message(embed=embed, ephemeral=True)
 
         except ValueError:
             await interaction.response.send_message(
-                "ID de canal inválido!",
+                "❌ ID do canal inválido! Digite apenas números.",
                 ephemeral=True
             )
-        except Exception as e:
+
+class ColorSelectView(discord.ui.View):
+    def __init__(self, welcome_view):
+        super().__init__(timeout=60)
+        self.welcome_view = welcome_view
+        self.add_color_buttons()
+
+    def add_color_buttons(self):
+        colors = [
+            ("Azul", discord.Color.blue(), discord.ButtonStyle.primary),
+            ("Vermelho", discord.Color.red(), discord.ButtonStyle.danger),
+            ("Verde", discord.Color.green(), discord.ButtonStyle.success),
+            ("Amarelo", discord.Color.gold(), discord.ButtonStyle.secondary),
+            ("Roxo", discord.Color.purple(), discord.ButtonStyle.primary),
+            ("Laranja", discord.Color.orange(), discord.ButtonStyle.secondary),
+            ("Rosa", discord.Color.pink(), discord.ButtonStyle.primary),
+            ("Preto", discord.Color.default(), discord.ButtonStyle.secondary),
+            ("Branco", discord.Color.light_grey(), discord.ButtonStyle.secondary)
+        ]
+
+        for label, color, style in colors:
+            button = discord.ui.Button(
+                label=label,
+                style=style,
+                custom_id=f"color_{color.value}"
+            )
+            button.callback = self.color_callback
+            self.add_item(button)
+
+    async def color_callback(self, interaction: discord.Interaction):
+        color_value = int(interaction.data["custom_id"].split("_")[1])
+        self.welcome_view.config["embed_color"] = discord.Color(color_value)
+        button = interaction.component
+        await interaction.response.send_message(
+            f"✅ Cor do embed alterada para {button.label}!",
+            ephemeral=True
+        )
+
+class PreviewView(discord.ui.View):
+    def __init__(self, welcome_view, embed):
+        super().__init__(timeout=300)
+        self.welcome_view = welcome_view
+        self.embed = embed
+
+    @discord.ui.button(label="Atualizar Preview", style=discord.ButtonStyle.primary)
+    async def update_preview(self, interaction: discord.Interaction, button: discord.ui.Button):
+        """Atualiza o preview do embed"""
+        if not self.welcome_view.config["message"]:
             await interaction.response.send_message(
-                f"Erro ao configurar: {str(e)}",
+                "❌ Você precisa configurar a mensagem primeiro!",
+                ephemeral=True
+            )
+            return
+
+        if self.welcome_view.config["use_embed"] and not self.welcome_view.config["embed_title"]:
+            await interaction.response.send_message(
+                "❌ Você precisa configurar o título do embed primeiro!",
+                ephemeral=True
+            )
+            return
+
+        # Atualiza o embed
+        self.embed.title = self.welcome_view.config["embed_title"]
+        self.embed.description = self.welcome_view.config["message"].replace("{user}", interaction.user.mention) \
+            .replace("{server}", interaction.guild.name) \
+            .replace("{count}", str(interaction.guild.member_count)) \
+            .replace("{username}", str(interaction.user)) \
+            .replace("{mention}", interaction.user.mention)
+        self.embed.color = self.welcome_view.config["embed_color"]
+
+        if self.welcome_view.config["embed_thumbnail"]:
+            self.embed.set_thumbnail(url=interaction.user.display_avatar.url)
+        else:
+            self.embed.set_thumbnail(url=None)
+
+        if self.welcome_view.config["embed_image"]:
+            self.embed.set_image(url=self.welcome_view.config["embed_image"])
+        else:
+            self.embed.set_image(url=None)
+
+        if self.welcome_view.config["embed_footer"]:
+            self.embed.set_footer(text=self.welcome_view.config["embed_footer"])
+        else:
+            self.embed.set_footer(text=None)
+
+        try:
+            await interaction.message.edit(embed=self.embed, view=self)
+            await interaction.response.send_message("✅ Preview atualizado!", ephemeral=True)
+        except discord.NotFound:
+            # Se a mensagem não existir mais, cria uma nova
+            await interaction.response.send_message(
+                "**Preview do Embed de Boas-vindas**",
+                embed=self.embed,
+                view=self,
                 ephemeral=True
             )
 

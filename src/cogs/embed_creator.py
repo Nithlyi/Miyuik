@@ -3,11 +3,16 @@ from discord import app_commands
 from discord.ext import commands
 from discord import ui
 import json
+import os
 
 class EmbedCreator(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.embed_data = {}
+        self.embeds_dir = "data/embeds"
+        # Ensure the embeds directory exists on cog load
+        os.makedirs(self.embeds_dir, exist_ok=True)
+
 
     class EmbedModal(ui.Modal, title="Criar Embed"):
         def __init__(self, embed_data: dict):
@@ -78,7 +83,7 @@ class EmbedCreator(commands.Cog):
             embed = discord.Embed(
                 title=self.title_input.value,
                 description=self.description_input.value,
-                color=int(self.color_input.value.replace("#", ""), 16) if self.color_input.value.startswith("#") else 0
+                color=int(self.color_input.value.replace("#", ""), 16) if self.color_input.value.startswith("#") and len(self.color_input.value) == 7 else 0
             )
             
             # Adiciona imagem se fornecida
@@ -116,11 +121,16 @@ class EmbedCreator(commands.Cog):
             await interaction.message.delete()
             await interaction.response.send_message("Criação do embed cancelada! ❌", ephemeral=True)
 
+        @discord.ui.button(label="Salvar", style=discord.ButtonStyle.secondary, emoji="💾")
+        async def save_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+            # Abre um modal para o usuário dar um nome ao embed
+            await interaction.response.send_modal(EmbedCreator.SaveEmbedModal(self.embed_data))
+
         def create_embed(self) -> discord.Embed:
             embed = discord.Embed(
                 title=self.embed_data.get("title", ""),
                 description=self.embed_data.get("description", ""),
-                color=int(self.embed_data.get("color", "#000000").replace("#", ""), 16)
+                color=int(self.embed_data.get("color", "#000000").replace("#", ""), 16) if self.embed_data.get("color", "#000000").startswith("#") and len(self.embed_data.get("color", "#000000")) == 7 else 0
             )
             
             # Adiciona imagem se existir
@@ -193,7 +203,7 @@ class EmbedCreator(commands.Cog):
             embed = discord.Embed(
                 title=self.embed_data.get("title", ""),
                 description=self.embed_data.get("description", ""),
-                color=int(self.embed_data.get("color", "#000000").replace("#", ""), 16)
+                color=int(self.embed_data.get("color", "#000000").replace("#", ""), 16) if self.embed_data.get("color", "#000000").startswith("#") and len(self.embed_data.get("color", "#000000")) == 7 else 0
             )
             
             # Adiciona imagem se existir
@@ -213,6 +223,35 @@ class EmbedCreator(commands.Cog):
                 )
             
             return embed
+
+    class SaveEmbedModal(ui.Modal, title="Salvar Embed"):
+        def __init__(self, embed_data: dict):
+            super().__init__()
+            self.embed_data = embed_data
+
+            self.name_input = ui.TextInput(
+                label="Nome do Embed",
+                placeholder="Digite o nome para salvar o embed",
+                required=True,
+                max_length=100
+            )
+            self.add_item(self.name_input)
+
+        async def on_submit(self, interaction: discord.Interaction):
+            embed_name = self.name_input.value.lower().replace(" ", "_")
+            file_path = f"{self.cog.embeds_dir}/{embed_name}.json"
+
+            try:
+                # Ensure data/embeds directory exists (redundant due to __init__, but good practice)
+                import os
+                os.makedirs(self.cog.embeds_dir, exist_ok=True)
+
+                with open(file_path, "w", encoding="utf-8") as f:
+                    json.dump(self.embed_data, f, ensure_ascii=False, indent=4)
+                await interaction.response.send_message(f"Embed salvo como `{embed_name}` com sucesso! ✅", ephemeral=True)
+            except Exception as e:
+                await interaction.response.send_message(f"Erro ao salvar o embed: {e}", ephemeral=True)
+
 
     @app_commands.command(name="embed", description="Cria um embed personalizado com menu interativo")
     @app_commands.checks.has_permissions(manage_messages=True)
@@ -238,12 +277,56 @@ class EmbedCreator(commands.Cog):
             value="1. Clique em 'Editar' para definir título, descrição, cor e imagens\n"
                   "2. Use 'Adicionar Campo' para adicionar campos ao embed\n"
                   "3. Clique em 'Enviar' quando estiver pronto\n"
-                  "4. Use 'Cancelar' para descartar o embed",
+                  "4. Use 'Cancelar' para descartar o embed\n"
+                  "5. Use 'Salvar' para salvar o embed para uso posterior", # Added save instruction
             inline=False
         )
 
         # Envia o menu inicial
         await interaction.response.send_message(embed=embed, view=self.EmbedView(self.embed_data))
 
+    @app_commands.command(name="load_embed", description="Carrega um embed salvo")
+    @app_commands.describe(name="O nome do embed salvo para carregar")
+    @app_commands.checks.has_permissions(manage_messages=True)
+    async def load_embed(self, interaction: discord.Interaction, name: str):
+        embed_name = name.lower().replace(" ", "_")
+        file_path = f"{self.embeds_dir}/{embed_name}.json"
+
+        if not os.path.exists(file_path):
+            await interaction.response.send_message(f"Embed com o nome `{name}` não encontrado.", ephemeral=True)
+            return
+
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                embed_data = json.load(f)
+
+            # Create embed object from loaded data
+            embed = discord.Embed(
+                title=embed_data.get("title", ""),
+                description=embed_data.get("description", ""),
+                color=int(embed_data.get("color", "#000000").replace("#", ""), 16) if embed_data.get("color", "#000000").startswith("#") and len(embed_data.get("color", "#000000")) == 7 else 0
+            )
+
+            if embed_data.get("image"):
+                embed.set_image(url=embed_data["image"])
+            if embed_data.get("thumbnail"):
+                embed.set_thumbnail(url=embed_data["thumbnail"])
+            
+            for field in embed_data.get("fields", []):
+                embed.add_field(
+                    name=field.get("name", ""),
+                    value=field.get("value", ""),
+                    inline=field.get("inline", False)
+                )
+
+            # Present the loaded embed with the interactive view
+            await interaction.response.send_message(f"Embed `{name}` carregado:", embed=embed, view=self.EmbedView(embed_data))
+
+        except json.JSONDecodeError:
+            await interaction.response.send_message(f"Erro ao decodificar o arquivo JSON para `{name}`.", ephemeral=True)
+        except Exception as e:
+            await interaction.response.send_message(f"Erro ao carregar o embed `{name}`: {e}", ephemeral=True)
+
+
 async def setup(bot: commands.Bot):
-    await bot.add_cog(EmbedCreator(bot)) 
+    await bot.add_cog(EmbedCreator(bot))

@@ -16,5 +16,18 @@
         "enabled": true,
         "punishment": "delete",
         "whitelist": []
+    },
+    "1361133326328529107": {
+        "raid_threshold": 5,
+        "check_username": false,
+        "check_account_age": true,
+        "check_avatar": true,
+        "check_similarity": true,
+        "raid_mode_active": true
+    },
+    "1361132790539878603": {
+        "raid_mode_active": true,
+        "check_username": true,
+        "check_account_age": true
     }
 }

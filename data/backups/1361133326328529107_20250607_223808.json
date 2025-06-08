@@ -1,0 +1,1929 @@
+{
+    "name": "Ghost Garden",
+    "icon_url": "https://cdn.discordapp.com/icons/1361133326328529107/a_fdbcb5ef6d817f671c8a55e6f31e522d.gif?size=1024",
+    "banner_url": null,
+    "verification_level": "medium",
+    "explicit_content_filter": "all_members",
+    "default_notifications": "NotificationLevel.only_mentions",
+    "roles": [
+        {
+            "name": "MatchBox",
+            "color": 0,
+            "hoist": false,
+            "position": 1,
+            "mentionable": false,
+            "permissions": 143935237457
+        },
+        {
+            "name": "Tokisaky",
+            "color": 0,
+            "hoist": false,
+            "position": 1,
+            "mentionable": false,
+            "permissions": 8
+        },
+        {
+            "name": "Mimu",
+            "color": 0,
+            "hoist": false,
+            "position": 1,
+            "mentionable": false,
+            "permissions": 1007021169
+        },
+        {
+            "name": "Ticket Tool",
+            "color": 0,
+            "hoist": false,
+            "position": 2,
+            "mentionable": false,
+            "permissions": 2416045072
+        },
+        {
+            "name": "SlashBot",
+            "color": 0,
+            "hoist": false,
+            "position": 3,
+            "mentionable": false,
+            "permissions": 8
+        },
+        {
+            "name": "━━━━━━━━━━━━━━━━",
+            "color": 0,
+            "hoist": false,
+            "position": 4,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "GarticMod",
+            "color": 0,
+            "hoist": false,
+            "position": 5,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "amarelo",
+            "color": 16774912,
+            "hoist": false,
+            "position": 6,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "branco",
+            "color": 16777215,
+            "hoist": false,
+            "position": 7,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "marrom",
+            "color": 4465920,
+            "hoist": false,
+            "position": 8,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "roxo",
+            "color": 10181046,
+            "hoist": false,
+            "position": 9,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "vermelho",
+            "color": 13697024,
+            "hoist": false,
+            "position": 10,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "laranja",
+            "color": 13992192,
+            "hoist": false,
+            "position": 11,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "azul",
+            "color": 1534624,
+            "hoist": false,
+            "position": 12,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "rosa",
+            "color": 15277667,
+            "hoist": false,
+            "position": 13,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "preto",
+            "color": 0,
+            "hoist": false,
+            "position": 14,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "━━━━━━━━━━━━━━━━",
+            "color": 0,
+            "hoist": false,
+            "position": 15,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Appy",
+            "color": 0,
+            "hoist": false,
+            "position": 16,
+            "mentionable": false,
+            "permissions": 17985694808
+        },
+        {
+            "name": "Giveaway Boat",
+            "color": 0,
+            "hoist": false,
+            "position": 17,
+            "mentionable": false,
+            "permissions": 395405814849
+        },
+        {
+            "name": "Lara✨",
+            "color": 0,
+            "hoist": false,
+            "position": 18,
+            "mentionable": false,
+            "permissions": 279176400136
+        },
+        {
+            "name": "FlaviBot",
+            "color": 0,
+            "hoist": false,
+            "position": 19,
+            "mentionable": false,
+            "permissions": 287804091672
+        },
+        {
+            "name": "Akinator",
+            "color": 0,
+            "hoist": false,
+            "position": 20,
+            "mentionable": false,
+            "permissions": 563036658166872
+        },
+        {
+            "name": "Mudae",
+            "color": 0,
+            "hoist": false,
+            "position": 21,
+            "mentionable": false,
+            "permissions": 537159744
+        },
+        {
+            "name": "Wick",
+            "color": 0,
+            "hoist": false,
+            "position": 22,
+            "mentionable": false,
+            "permissions": 8
+        },
+        {
+            "name": "DISBOARD.org",
+            "color": 0,
+            "hoist": false,
+            "position": 23,
+            "mentionable": false,
+            "permissions": 19473
+        },
+        {
+            "name": "carl-bot",
+            "color": 0,
+            "hoist": false,
+            "position": 24,
+            "mentionable": false,
+            "permissions": 2088234230
+        },
+        {
+            "name": "Dyno",
+            "color": 0,
+            "hoist": false,
+            "position": 25,
+            "mentionable": false,
+            "permissions": 1513962695871
+        },
+        {
+            "name": "Lofi Radio",
+            "color": 0,
+            "hoist": false,
+            "position": 26,
+            "mentionable": false,
+            "permissions": 66407424
+        },
+        {
+            "name": "Zira",
+            "color": 0,
+            "hoist": false,
+            "position": 27,
+            "mentionable": false,
+            "permissions": 268790848
+        },
+        {
+            "name": "━━━━━━━━━━━━━━━━",
+            "color": 0,
+            "hoist": false,
+            "position": 28,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "GarticBOT",
+            "color": 0,
+            "hoist": false,
+            "position": 29,
+            "mentionable": false,
+            "permissions": 248896
+        },
+        {
+            "name": "━━━━━━━━━━━━━━━━",
+            "color": 0,
+            "hoist": false,
+            "position": 30,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Any pronoun",
+            "color": 0,
+            "hoist": false,
+            "position": 31,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "She/he",
+            "color": 0,
+            "hoist": false,
+            "position": 32,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "He/him",
+            "color": 0,
+            "hoist": false,
+            "position": 33,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "No binari",
+            "color": 0,
+            "hoist": false,
+            "position": 34,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Girl",
+            "color": 0,
+            "hoist": false,
+            "position": 35,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Boy",
+            "color": 0,
+            "hoist": false,
+            "position": 36,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "-18",
+            "color": 0,
+            "hoist": false,
+            "position": 37,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "+18",
+            "color": 0,
+            "hoist": false,
+            "position": 38,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "━━━━━━━━━━━━━━━━",
+            "color": 0,
+            "hoist": false,
+            "position": 39,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Server Booster",
+            "color": 16023551,
+            "hoist": false,
+            "position": 40,
+            "mentionable": false,
+            "permissions": 1654634107440641
+        },
+        {
+            "name": "Souls",
+            "color": 0,
+            "hoist": true,
+            "position": 41,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Bot's",
+            "color": 0,
+            "hoist": true,
+            "position": 42,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Músic bot's",
+            "color": 0,
+            "hoist": true,
+            "position": 43,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Loritta",
+            "color": 0,
+            "hoist": false,
+            "position": 44,
+            "mentionable": false,
+            "permissions": 2080374975
+        },
+        {
+            "name": "━━━━━━━━━━━━━━━━",
+            "color": 0,
+            "hoist": false,
+            "position": 45,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "kuro ♱",
+            "color": 10181046,
+            "hoist": false,
+            "position": 46,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "vampire 𐙚ㅤ",
+            "color": 5767168,
+            "hoist": false,
+            "position": 47,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Designer",
+            "color": 16748760,
+            "hoist": false,
+            "position": 48,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Miyw",
+            "color": 0,
+            "hoist": false,
+            "position": 49,
+            "mentionable": false,
+            "permissions": 545424141567
+        },
+        {
+            "name": "Recepcionista",
+            "color": 49879,
+            "hoist": true,
+            "position": 50,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Moderador",
+            "color": 15665,
+            "hoist": true,
+            "position": 51,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Senior Administrador",
+            "color": 4325376,
+            "hoist": true,
+            "position": 52,
+            "mentionable": false,
+            "permissions": 0
+        },
+        {
+            "name": "Donos",
+            "color": 2164007,
+            "hoist": true,
+            "position": 53,
+            "mentionable": false,
+            "permissions": 8
+        }
+    ],
+    "channels": [
+        {
+            "name": "♰                                         intro",
+            "position": 0,
+            "type": "category",
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 65537,
+                    "deny": 17721869741136
+                },
+                {
+                    "id": 155149108183695360,
+                    "type": "member",
+                    "allow": 1707140813679697,
+                    "deny": 0
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805306384
+                }
+            ]
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪welcome",
+            "type": "text",
+            "position": 0,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 65537,
+                    "deny": 17721869741136
+                },
+                {
+                    "id": 155149108183695360,
+                    "type": "member",
+                    "allow": 1707140813679697,
+                    "deny": 0
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805306384
+                }
+            ],
+            "parent": "♰                                         intro",
+            "topic": "",
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪slc-parceria",
+            "type": "text",
+            "position": 1,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 65537,
+                    "deny": 17721869741136
+                },
+                {
+                    "id": 155149108183695360,
+                    "type": "member",
+                    "allow": 1707140813679697,
+                    "deny": 0
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805306384
+                }
+            ],
+            "parent": "♰                                         intro",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪suporte",
+            "type": "text",
+            "position": 2,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 65537,
+                    "deny": 17721869741136
+                },
+                {
+                    "id": 155149108183695360,
+                    "type": "member",
+                    "allow": 1707140813679697,
+                    "deny": 0
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805306384
+                }
+            ],
+            "parent": "♰                                         intro",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪parcerias",
+            "type": "text",
+            "position": 3,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 103079217216
+                },
+                {
+                    "id": 235148962103951360,
+                    "type": "member",
+                    "allow": 265280,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                                         intro",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪regras",
+            "type": "text",
+            "position": 4,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 103079217216
+                },
+                {
+                    "id": 235148962103951360,
+                    "type": "member",
+                    "allow": 265280,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                                         intro",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪anunciamentos",
+            "type": "text",
+            "position": 5,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 65537,
+                    "deny": 17721869741136
+                },
+                {
+                    "id": 155149108183695360,
+                    "type": "member",
+                    "allow": 1707140813679697,
+                    "deny": 0
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805306384
+                }
+            ],
+            "parent": "♰                                         intro",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "♰                                         registro",
+            "position": 1,
+            "type": "category",
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 66561,
+                    "deny": 17859308955728
+                },
+                {
+                    "id": 235148962103951360,
+                    "type": "member",
+                    "allow": 378762554448,
+                    "deny": 0
+                }
+            ]
+        },
+        {
+            "name": "ׄׄ꒰🦇꒱˖-࣪verificação",
+            "type": "text",
+            "position": 6,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 66561,
+                    "deny": 17859308955728
+                },
+                {
+                    "id": 275813801792634880,
+                    "type": "member",
+                    "allow": 263232,
+                    "deny": 0
+                },
+                {
+                    "id": 235148962103951360,
+                    "type": "member",
+                    "allow": 378762554448,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                                         registro",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🦇꒱˖-࣪apresente-se",
+            "type": "text",
+            "position": 7,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 137439283265,
+                    "deny": 18273773216784
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805306384
+                }
+            ],
+            "parent": "♰                                         registro",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🦇꒱˖-࣪registro",
+            "type": "text",
+            "position": 8,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 66561,
+                    "deny": 17859308955728
+                },
+                {
+                    "id": 275813801792634880,
+                    "type": "member",
+                    "allow": 263232,
+                    "deny": 0
+                },
+                {
+                    "id": 235148962103951360,
+                    "type": "member",
+                    "allow": 378762554448,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                                         registro",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🦇꒱˖-࣪cores",
+            "type": "text",
+            "position": 9,
+            "overwrites": [
+                {
+                    "id": 1332644814344425593,
+                    "type": "member",
+                    "allow": 0,
+                    "deny": 0
+                },
+                {
+                    "id": 235148962103951360,
+                    "type": "member",
+                    "allow": 0,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                                         registro",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "♰                                         interação",
+            "position": 2,
+            "type": "category",
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412317190209,
+                    "deny": 1777492377662480
+                },
+                {
+                    "id": 155149108183695360,
+                    "type": "member",
+                    "allow": 1689934640967249,
+                    "deny": 0
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 563482798189649,
+                    "deny": 0
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ]
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪chat",
+            "type": "text",
+            "position": 10,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412317190209,
+                    "deny": 1777492377662480
+                },
+                {
+                    "id": 155149108183695360,
+                    "type": "member",
+                    "allow": 1689934640967249,
+                    "deny": 0
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 563482798189649,
+                    "deny": 0
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ],
+            "parent": "♰                                         interação",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪mídia",
+            "type": "text",
+            "position": 11,
+            "overwrites": [
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                                         interação",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪comandos",
+            "type": "text",
+            "position": 12,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412317190209,
+                    "deny": 1777492377662480
+                },
+                {
+                    "id": 155149108183695360,
+                    "type": "member",
+                    "allow": 1689934640967249,
+                    "deny": 0
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 563482798189649,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                                         interação",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪artes",
+            "type": "text",
+            "position": 13,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412317190209,
+                    "deny": 1777492377662480
+                },
+                {
+                    "id": 155149108183695360,
+                    "type": "member",
+                    "allow": 1689934640967249,
+                    "deny": 0
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 563482798189649,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                                         interação",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪pets",
+            "type": "text",
+            "position": 14,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412317190209,
+                    "deny": 1777492377662480
+                },
+                {
+                    "id": 155149108183695360,
+                    "type": "member",
+                    "allow": 1689934640967249,
+                    "deny": 0
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 563482798189649,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                                         interação",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "♰                                         bots",
+            "position": 3,
+            "type": "category",
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412317190209,
+                    "deny": 17721869919248
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 137439267904,
+                    "deny": 805437457
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ]
+        },
+        {
+            "name": "ׄ꒰🦇꒱˖-࣪mudae",
+            "type": "text",
+            "position": 15,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412317190209,
+                    "deny": 17721869919248
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 137439267904,
+                    "deny": 805437457
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ],
+            "parent": "♰                                         bots",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄ꒰🦇꒱˖-࣪gartic",
+            "type": "text",
+            "position": 16,
+            "overwrites": [
+                {
+                    "id": 487328045275938828,
+                    "type": "member",
+                    "allow": 551903300672,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                                         bots",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄ꒰🦇꒱˖-࣪akinator",
+            "type": "text",
+            "position": 17,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412317190209,
+                    "deny": 17721869919248
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 137439267904,
+                    "deny": 805437457
+                }
+            ],
+            "parent": "♰                                         bots",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "♰                                         social",
+            "position": 4,
+            "type": "category",
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412317222977,
+                    "deny": 1214542424208400
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ]
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪instagram",
+            "type": "text",
+            "position": 18,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412317222977,
+                    "deny": 1214542424208400
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ],
+            "parent": "♰                                         social",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪face-reveal",
+            "type": "text",
+            "position": 19,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412317222977,
+                    "deny": 1214542424208400
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ],
+            "parent": "♰                                         social",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "ׄׄ꒰🩸꒱˖-࣪tiktok",
+            "type": "text",
+            "position": 20,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412317222977,
+                    "deny": 1214542424208400
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ],
+            "parent": "♰                                         social",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "♰                                         call",
+            "position": 5,
+            "type": "category",
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 39994738936385,
+                    "deny": 1777492377662480
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ]
+        },
+        {
+            "name": "ׄ꒰🦇꒱˖-࣪sem-mic",
+            "type": "text",
+            "position": 21,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 39994738936385,
+                    "deny": 1777492377662480
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ],
+            "parent": "♰                                         call",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "Bate-papo¹",
+            "type": "voice",
+            "position": 0,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 39994738936385,
+                    "deny": 1777492377662480
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ],
+            "parent": "♰                                         call",
+            "bitrate": 64000,
+            "user_limit": 10
+        },
+        {
+            "name": "Bate-papo²",
+            "type": "voice",
+            "position": 1,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 39994738936385,
+                    "deny": 1777492377662480
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ],
+            "parent": "♰                                         call",
+            "bitrate": 64000,
+            "user_limit": 15
+        },
+        {
+            "name": "· · ──── ·♰· ──── · ·",
+            "position": 6,
+            "type": "category",
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 39719861027393,
+                    "deny": 1144448557968400
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ]
+        },
+        {
+            "name": "privado duo  ׄ",
+            "type": "voice",
+            "position": 2,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 39719861027393,
+                    "deny": 1144448557968400
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ],
+            "parent": "· · ──── ·♰· ──── · ·",
+            "bitrate": 64000,
+            "user_limit": 2
+        },
+        {
+            "name": "privado trio",
+            "type": "voice",
+            "position": 3,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 39719861027393,
+                    "deny": 1144448557968400
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ],
+            "parent": "· · ──── ·♰· ──── · ·",
+            "bitrate": 64000,
+            "user_limit": 3
+        },
+        {
+            "name": "privado quarteto",
+            "type": "voice",
+            "position": 4,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 39719861027393,
+                    "deny": 1144448557968400
+                },
+                {
+                    "id": 1361137976226091208,
+                    "type": "role",
+                    "allow": 66560,
+                    "deny": 805314576
+                }
+            ],
+            "parent": "· · ──── ·♰· ──── · ·",
+            "bitrate": 64000,
+            "user_limit": 4
+        },
+        {
+            "name": "· · ──── ·♰· ──── · ·",
+            "position": 7,
+            "type": "category",
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412318239809,
+                    "deny": 690622988218896
+                }
+            ]
+        },
+        {
+            "name": "pedir-música",
+            "type": "text",
+            "position": 22,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412318239809,
+                    "deny": 690622988218896
+                }
+            ],
+            "parent": "· · ──── ·♰· ──── · ·",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "Lofi 24/7",
+            "type": "stage_voice",
+            "position": 5,
+            "overwrites": [
+                {
+                    "id": 1361135095708127322,
+                    "type": "role",
+                    "allow": 20971536,
+                    "deny": 0
+                },
+                {
+                    "id": 1361135058395594823,
+                    "type": "role",
+                    "allow": 20971536,
+                    "deny": 0
+                }
+            ],
+            "parent": "· · ──── ·♰· ──── · ·"
+        },
+        {
+            "name": "Música¹",
+            "type": "voice",
+            "position": 6,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412318239809,
+                    "deny": 690622988218896
+                }
+            ],
+            "parent": "· · ──── ·♰· ──── · ·",
+            "bitrate": 64000,
+            "user_limit": 12
+        },
+        {
+            "name": "Música²",
+            "type": "voice",
+            "position": 7,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 412318239809,
+                    "deny": 690622988218896
+                }
+            ],
+            "parent": "· · ──── ·♰· ──── · ·",
+            "bitrate": 64000,
+            "user_limit": 12
+        },
+        {
+            "name": "· · ──── ·♰· ──── · ·",
+            "position": 8,
+            "type": "category",
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 1024
+                }
+            ]
+        },
+        {
+            "name": "👻 • liwoy",
+            "type": "voice",
+            "position": 8,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 1049600
+                },
+                {
+                    "id": 1380830215910981652,
+                    "type": "role",
+                    "allow": 1049600,
+                    "deny": 0
+                }
+            ],
+            "parent": "· · ──── ·♰· ──── · ·",
+            "bitrate": 64000,
+            "user_limit": 0
+        },
+        {
+            "name": "🩸• evy",
+            "type": "voice",
+            "position": 9,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 1049600
+                },
+                {
+                    "id": 1380833145850433556,
+                    "type": "role",
+                    "allow": 1049600,
+                    "deny": 0
+                }
+            ],
+            "parent": "· · ──── ·♰· ──── · ·",
+            "bitrate": 64000,
+            "user_limit": 0
+        },
+        {
+            "name": "♰                             staff",
+            "position": 9,
+            "type": "category",
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 1049600
+                },
+                {
+                    "id": 1361135095708127322,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135058395594823,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135113722925193,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135036954574848,
+                    "type": "role",
+                    "allow": 805309456,
+                    "deny": 1
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 268561488,
+                    "deny": 0
+                }
+            ]
+        },
+        {
+            "name": "chat",
+            "type": "text",
+            "position": 23,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 1049600
+                },
+                {
+                    "id": 1361135058395594823,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135095708127322,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135113722925193,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135036954574848,
+                    "type": "role",
+                    "allow": 805309456,
+                    "deny": 1
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 268561488,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                             staff",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "commands",
+            "type": "text",
+            "position": 24,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 1049600
+                },
+                {
+                    "id": 1361135095708127322,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135058395594823,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135113722925193,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135036954574848,
+                    "type": "role",
+                    "allow": 805309456,
+                    "deny": 1
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 268561488,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                             staff",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "moderator-only",
+            "type": "text",
+            "position": 25,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 1049600
+                },
+                {
+                    "id": 1361135095708127322,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135058395594823,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135036954574848,
+                    "type": "role",
+                    "allow": 805309456,
+                    "deny": 1
+                },
+                {
+                    "id": 1361135113722925193,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 268561488,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                             staff",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "bump",
+            "type": "text",
+            "position": 26,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 1049600
+                },
+                {
+                    "id": 302050872383242240,
+                    "type": "member",
+                    "allow": 1024,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                             staff",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "logs",
+            "type": "text",
+            "position": 27,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 1049600
+                },
+                {
+                    "id": 1361135095708127322,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135058395594823,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135113722925193,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135036954574848,
+                    "type": "role",
+                    "allow": 805309456,
+                    "deny": 1
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 268561488,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                             staff",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "solicitações",
+            "type": "text",
+            "position": 28,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 1049600
+                },
+                {
+                    "id": 1361135095708127322,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135058395594823,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135113722925193,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135036954574848,
+                    "type": "role",
+                    "allow": 805309456,
+                    "deny": 1
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 268561488,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                             staff",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "texto-parceria",
+            "type": "text",
+            "position": 29,
+            "overwrites": [
+                {
+                    "id": 1361133326328529107,
+                    "type": "role",
+                    "allow": 0,
+                    "deny": 1049600
+                },
+                {
+                    "id": 1361135058395594823,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135095708127322,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361135036954574848,
+                    "type": "role",
+                    "allow": 805309456,
+                    "deny": 1
+                },
+                {
+                    "id": 1361135113722925193,
+                    "type": "role",
+                    "allow": 1051648,
+                    "deny": 805306385
+                },
+                {
+                    "id": 1361138010506264586,
+                    "type": "role",
+                    "allow": 268561488,
+                    "deny": 0
+                }
+            ],
+            "parent": "♰                             staff",
+            "topic": null,
+            "nsfw": false,
+            "slowmode_delay": 0
+        },
+        {
+            "name": "· · ──── ·♰· ──── · ·",
+            "position": 10,
+            "type": "category",
+            "overwrites": []
+        }
+    ],
+    "emojis": [
+        {
+            "name": "1_",
+            "url": "https://cdn.discordapp.com/emojis/1361470490341806301.png"
+        },
+        {
+            "name": "2_",
+            "url": "https://cdn.discordapp.com/emojis/1361470530502262844.png"
+        },
+        {
+            "name": "3_",
+            "url": "https://cdn.discordapp.com/emojis/1361470566652968972.png"
+        },
+        {
+            "name": "4_",
+            "url": "https://cdn.discordapp.com/emojis/1361470585846108242.png"
+        },
+        {
+            "name": "5_",
+            "url": "https://cdn.discordapp.com/emojis/1361470615453962452.png"
+        },
+        {
+            "name": "6_",
+            "url": "https://cdn.discordapp.com/emojis/1361470640103624909.png"
+        },
+        {
+            "name": "7_",
+            "url": "https://cdn.discordapp.com/emojis/1361470661381591191.png"
+        },
+        {
+            "name": "8_",
+            "url": "https://cdn.discordapp.com/emojis/1361470679614099657.png"
+        },
+        {
+            "name": "9_",
+            "url": "https://cdn.discordapp.com/emojis/1361470697146155088.png"
+        },
+        {
+            "name": "10",
+            "url": "https://cdn.discordapp.com/emojis/1361470728091734267.png"
+        },
+        {
+            "name": "18",
+            "url": "https://cdn.discordapp.com/emojis/1361485402250281020.png"
+        },
+        {
+            "name": "18",
+            "url": "https://cdn.discordapp.com/emojis/1361485422181482496.png"
+        },
+        {
+            "name": "anime_shut_up",
+            "url": "https://cdn.discordapp.com/emojis/1364814750680088623.png"
+        },
+        {
+            "name": "HuTaoPixelEmotivegif",
+            "url": "https://cdn.discordapp.com/emojis/1364814787006959658.gif"
+        },
+        {
+            "name": "catgirl_cozy",
+            "url": "https://cdn.discordapp.com/emojis/1364814804438618182.png"
+        },
+        {
+            "name": "1373001921241284608",
+            "url": "https://cdn.discordapp.com/emojis/1377871840164319293.png"
+        },
+        {
+            "name": "emoji_17",
+            "url": "https://cdn.discordapp.com/emojis/1378073116928114849.gif"
+        },
+        {
+            "name": "emoji_18",
+            "url": "https://cdn.discordapp.com/emojis/1378073251703689358.gif"
+        },
+        {
+            "name": "emoji_19",
+            "url": "https://cdn.discordapp.com/emojis/1378073284389634151.gif"
+        },
+        {
+            "name": "emoji_21",
+            "url": "https://cdn.discordapp.com/emojis/1378078467072987266.gif"
+        },
+        {
+            "name": "emoji_22",
+            "url": "https://cdn.discordapp.com/emojis/1378082244756897902.gif"
+        },
+        {
+            "name": "emoji_23",
+            "url": "https://cdn.discordapp.com/emojis/1378082296690642954.gif"
+        },
+        {
+            "name": "emoji_23",
+            "url": "https://cdn.discordapp.com/emojis/1378082428928921600.gif"
+        },
+        {
+            "name": "emoji_24",
+            "url": "https://cdn.discordapp.com/emojis/1378082513943003156.gif"
+        },
+        {
+            "name": "emoji_25",
+            "url": "https://cdn.discordapp.com/emojis/1378082547929710693.gif"
+        },
+        {
+            "name": "emoji_26",
+            "url": "https://cdn.discordapp.com/emojis/1378082752796299294.gif"
+        },
+        {
+            "name": "emoji_27",
+            "url": "https://cdn.discordapp.com/emojis/1378082844194111719.gif"
+        },
+        {
+            "name": "emoji_28",
+            "url": "https://cdn.discordapp.com/emojis/1378082913123307612.gif"
+        },
+        {
+            "name": "emoji_29",
+            "url": "https://cdn.discordapp.com/emojis/1378082948833611806.gif"
+        },
+        {
+            "name": "emoji_31",
+            "url": "https://cdn.discordapp.com/emojis/1378083111933575410.gif"
+        },
+        {
+            "name": "emoji_31",
+            "url": "https://cdn.discordapp.com/emojis/1378084723439570984.gif"
+        }
+    ],
+    "created_at": "2025-06-07T22:38:08.594929"
+}

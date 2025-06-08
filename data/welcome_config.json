@@ -1,1 +1,14 @@
-{}
+{
+    "1361133326328529107": {
+        "welcome": {
+            "enabled": true,
+            "channel_id": 1361133682114560071,
+            "message": "Boas vindas a G\u029c\u1d0fs\u1d1bs G\u1d00\u0280\u1d05\u1d07\u0274\n\u2937Seja bem vindo(a) pequena alma vagante.",
+            "use_embed": true,
+            "embed_title": "Welcome",
+            "embed_thumbnail": true,
+            "embed_image": "https://i.pinimg.com/736x/14/30/e4/1430e4eed23055a546fcd9adef3237f2.jpg",
+            "embed_footer": ""
+        }
+    }
+}
