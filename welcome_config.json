@@ -1,0 +1,24 @@
+{
+    "1361132790539878603": {
+        "enabled": true,
+        "channel_id": null,
+        "message": "Bem-vindo {user} ao {server}!",
+        "use_embed": true,
+        "embed_title": "\ud83d\udc4b Boas-vindas!",
+        "embed_thumbnail": true,
+        "embed_image": null,
+        "embed_footer": null,
+        "embed_color": 3447003,
+        "welcome": {
+            "enabled": true,
+            "channel_id": 1361132790539878607,
+            "message": "Ol\u00e1 {user}\n\u2937Seja bem vindo(a) pequena alma vagante.",
+            "use_embed": true,
+            "embed_title": "Boas vindas a G\u029c\u1d0fs\u1d1bs G\u1d00\u0280\u1d05\u1d07\u0274",
+            "embed_thumbnail": true,
+            "embed_image": "https://media.discordapp.net/attachments/1362206488063377672/1381114385501519892/4f3facee34f68022913b03d363464a23.jpg?ex=6847a801&is=68465681&hm=fd2b0bc515e5931b04be16bf2d1fc9e503690818a0a493427cbd3c458fd8eb4d&=&format=webp&width=662&height=373",
+            "embed_footer": null,
+            "embed_color": 15158332
+        }
+    }
+}

@@ -11,44 +11,6 @@ class General(commands.Cog):
         self.start_time = time.time()
         self.afk_users = {} # Dictionary to store AFK users: {user_id: {"status": "...", "time": timestamp}}
 
-    @app_commands.command(name="sync", description="Atualiza os comandos slash do bot")
-    async def sync(self, interaction: discord.Interaction):
-        try:
-            # Verifica se o usuário é o dono do bot
-            if interaction.user.id not in self.bot.owner_ids: # Using owner_ids list is safer
-                embed = discord.Embed(
-                    title="❌ Erro",
-                    description="Apenas o dono do bot pode usar este comando!",
-                    color=discord.Color.red()
-                )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-                return
-
-            await interaction.response.defer(ephemeral=True)
-
-            # Sincroniza os comandos globalmente
-            synced = await self.bot.tree.sync()
-
-            # Sincroniza os comandos no servidor atual
-            guild_synced = []
-            if interaction.guild: # Only sync to guild if command is used in a guild
-                 guild_synced = await self.bot.tree.sync(guild=interaction.guild)
-
-            embed = discord.Embed(
-                title="🔄 Comandos Atualizados",
-                description=f"**Comandos Globais:** {len(synced)}\n**Comandos do Servidor:** {len(guild_synced)}",
-                color=discord.Color.green()
-            )
-            await interaction.followup.send(embed=embed, ephemeral=True)
-
-        except Exception as e:
-            error_embed = discord.Embed(
-                title="❌ Erro",
-                description=f"Ocorreu um erro ao sincronizar os comandos:\n```{str(e)}```",
-                color=discord.Color.red()
-            )
-            # Always use followup.send after defer, even if defer might have failed internally
-            await interaction.followup.send(embed=error_embed, ephemeral=True)
 
 
     @app_commands.command(name="ping", description="Mostra a latência do bot")

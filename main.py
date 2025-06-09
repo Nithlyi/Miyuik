@@ -1,64 +1,51 @@
-from typing import Set
-import os
 import discord
 from discord.ext import commands
+import os
 from dotenv import load_dotenv
-from src.cogs import load_cogs
-from src.handlers import setup_handlers
+import webserver
 
-# Carrega as variáveis de ambiente do arquivo .env
+print("Loading environment variables...")
 load_dotenv()
+print("Environment variables loaded.")
 
-# Configuração do bot
-class Bot(commands.Bot):
-    def __init__(self):
-        # Configura as intents do bot
-        intents = discord.Intents.default()
-        intents.message_content = True  # Permite o bot de ler o conteúdo das mensagens
-        intents.members = True          # Permite o bot de receber eventos de membros do servidor
-        super().__init__(command_prefix="!", intents=intents)
-        # Define os IDs dos donos do bot
-        self.owner_ids: Set[int] = {1243889655087370270}  # Substitua pelo seu ID
+print("Creating bot instance...")
+bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
+print("Bot instance created.")
+bot.owner_ids = {1243889655087370270}
 
-    # Executado quando o bot está pronto
-    async def setup_hook(self):
-        print("Carregando cogs...")
-        await load_cogs(self)  # Carrega todos os cogs
-        print("Cogs carregados com sucesso!")
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+    webserver.start_web_server()
+    await bot.load_extension('src.cogs.general')
+    await bot.load_extension('src.cogs.moderation')
+    await bot.load_extension('src.cogs.utility')
+    await bot.load_extension('src.cogs.giveaway')
+    await bot.load_extension('src.cogs.tickets')
+    await bot.load_extension('src.cogs.welcome')
+    await bot.load_extension('src.cogs.autorole')
+    await bot.load_extension('src.cogs.levels')
+    await bot.load_extension('src.cogs.protection')
+    await bot.load_extension('src.cogs.backup')
+    await bot.load_extension('src.cogs.git')
+    await bot.load_extension('src.cogs.embed_creator')
+    await bot.load_extension('src.cogs.moderation_panel')
+    await bot.load_extension('src.cogs.support')
+    await bot.load_extension('src.cogs.history')
+    await bot.load_extension('src.cogs.interactions')
 
-        print("Configurando handlers...")
-        setup_handlers(self)  # Configura os handlers
-        print("Handlers configurados com sucesso!")
+    print(f"Total Cogs Loaded: {len(bot.cogs)}")
+    print(f"Total Commands Loaded: {len(bot.commands)}")
 
-        print("Sincronizando comandos com o Discord...")
-        try:
-            synced = await self.tree.sync()  # Sincroniza os comandos com o Discord
-            print(f"Sincronizados {len(synced)} comandos")
-        except Exception as e:
-            print(f"Erro ao sincronizar comandos: {e}")
-        print("Setup completo!")
-
-    # Evento chamado quando o bot está online
-    async def on_ready(self):
-        print(f"Bot pronto! Logado como {self.user}")
-        print(f"ID do Bot: {self.user.id}")
-        print("------")
-        try:
-            synced = await self.tree.sync()  # Sincroniza os comandos com o Discord
-            print(f"Sincronizados {len(synced)} comandos")
-        except Exception as e:
-            print(f"Erro ao sincronizar comandos em on_ready: {e}")
-
-
-# Função principal
-def main():
-    bot = Bot()
     try:
-        bot.run(os.getenv("DISCORD_TOKEN"))  # Inicia o bot com o token do Discord
+        synced = await bot.tree.sync()
+        print(f"Comandos Globais Sincronizados (Inicialização): {len(synced)}")
     except Exception as e:
-        print(f"Erro ao iniciar o bot: {e}")
+        print(f"Erro ao sincronizar comandos na inicialização: {e}")
 
-
-# Garante que a função main() seja executada quando o script for executado
-if __name__ == "__main__":
-    main()
+print("Running the bot...")
+try:
+    bot.run(os.getenv('DISCORD_TOKEN'))
+except Exception as e:
+    print(f"Erro ao rodar o bot: {e}")
+print("Bot finished running.")

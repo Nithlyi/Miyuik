@@ -5,10 +5,34 @@ import platform
 import psutil
 import time
 from datetime import datetime
+import discord
+from discord import app_commands
+from discord.ext import commands
+
 
 class Utility(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
+
+    @app_commands.command(name="avatar", description="Mostra o avatar de um usuário")
+    @app_commands.describe(user="O usuário do qual mostrar o avatar")
+    async def avatar(self, interaction: discord.Interaction, user: discord.Member = None):
+        user = user or interaction.user
+        avatar_url = user.avatar.url if user.avatar else user.default_avatar.url
+
+        embed = discord.Embed(
+            title=f"Avatar de {user.name}",
+            color=discord.Color.from_rgb(0, 0, 0)
+        )
+        embed.set_image(url=avatar_url)
+
+        # Create a button to download the avatar
+        download_button = discord.ui.Button(label="Baixar Avatar", style=discord.ButtonStyle.link, url=avatar_url)
+        view = discord.ui.View()
+        view.add_item(download_button)
+
+        await interaction.response.send_message(embed=embed, view=view)
+
 
     @app_commands.command(name="status", description="Mostra a latência do bot e informações do sistema")
     async def status(self, interaction: discord.Interaction):

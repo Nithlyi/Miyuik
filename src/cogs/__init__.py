@@ -14,6 +14,7 @@ async def load_cogs(bot: commands.Bot):
                     # Convert path to module path
                     relative_path = os.path.relpath(os.path.join(root, filename[:-3]), ".")
                     module_path = relative_path.replace("/", ".").replace("\\", ".")
+                    print(f"Attempting to load cog: {module_path}")
                     await bot.load_extension(module_path)
                     print(f"Loaded cog: {module_path}")
                 except commands.ExtensionNotFound as e:
