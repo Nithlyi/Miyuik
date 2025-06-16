@@ -121,11 +121,6 @@ class EmbedCreator(commands.Cog):
             await interaction.message.delete()
             await interaction.response.send_message("Criação do embed cancelada! ❌", ephemeral=True)
 
-        @discord.ui.button(label="Salvar", style=discord.ButtonStyle.secondary, emoji="💾")
-        async def save_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-            # Abre um modal para o usuário dar um nome ao embed
-            await interaction.response.send_modal(EmbedCreator.SaveEmbedModal(self.embed_data))
-
         def create_embed(self) -> discord.Embed:
             embed = discord.Embed(
                 title=self.embed_data.get("title", ""),
@@ -224,35 +219,6 @@ class EmbedCreator(commands.Cog):
             
             return embed
 
-    class SaveEmbedModal(ui.Modal, title="Salvar Embed"):
-        def __init__(self, embed_data: dict):
-            super().__init__()
-            self.embed_data = embed_data
-
-            self.name_input = ui.TextInput(
-                label="Nome do Embed",
-                placeholder="Digite o nome para salvar o embed",
-                required=True,
-                max_length=100
-            )
-            self.add_item(self.name_input)
-
-        async def on_submit(self, interaction: discord.Interaction):
-            embed_name = self.name_input.value.lower().replace(" ", "_")
-            file_path = f"{self.cog.embeds_dir}/{embed_name}.json"
-
-            try:
-                # Ensure data/embeds directory exists (redundant due to __init__, but good practice)
-                import os
-                os.makedirs(self.cog.embeds_dir, exist_ok=True)
-
-                with open(file_path, "w", encoding="utf-8") as f:
-                    json.dump(self.embed_data, f, ensure_ascii=False, indent=4)
-                await interaction.response.send_message(f"Embed salvo como `{embed_name}` com sucesso! ✅", ephemeral=True)
-            except Exception as e:
-                await interaction.response.send_message(f"Erro ao salvar o embed: {e}", ephemeral=True)
-
-
     @app_commands.command(name="embed", description="Cria um embed personalizado com menu interativo")
     @app_commands.checks.has_permissions(manage_messages=True)
     async def embed(self, interaction: discord.Interaction):
@@ -277,8 +243,7 @@ class EmbedCreator(commands.Cog):
             value="1. Clique em 'Editar' para definir título, descrição, cor e imagens\n"
                   "2. Use 'Adicionar Campo' para adicionar campos ao embed\n"
                   "3. Clique em 'Enviar' quando estiver pronto\n"
-                  "4. Use 'Cancelar' para descartar o embed\n"
-                  "5. Use 'Salvar' para salvar o embed para uso posterior", # Added save instruction
+                  "4. Use 'Cancelar' para descartar o embed\n",
             inline=False
         )
 
