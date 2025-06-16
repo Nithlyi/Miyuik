@@ -1,0 +1,19 @@
+modules = ["python-3.12"]
+
+[nix]
+channel = "stable-24_05"
+
+[workflows]
+
+[[workflows.workflow]]
+name = "python main.py"
+mode = "sequential"
+author = 32604248
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python main.py"
+
+[[ports]]
+localPort = 8080
+externalPort = 80
